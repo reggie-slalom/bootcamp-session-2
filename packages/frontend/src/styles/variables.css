@@ -1,0 +1,71 @@
+/**
+ * CSS Variables - Design System
+ * Based on UI Guidelines
+ */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #2196F3;
+  --color-primary-dark: #1976D2;
+  --color-primary-light: #BBDEFB;
+  
+  /* Status Colors */
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+  --color-error: #F44336;
+  --color-info: #2196F3;
+  
+  /* Priority Colors */
+  --color-priority-high: #F44336;
+  --color-priority-medium: #FF9800;
+  --color-priority-low: #4CAF50;
+  --color-priority-none: #9E9E9E;
+  
+  /* Neutral Colors */
+  --color-background: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-border: #E0E0E0;
+  --color-text-primary: #212121;
+  --color-text-secondary: #757575;
+  --color-text-disabled: #BDBDBD;
+  
+  /* Spacing System (8px grid) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Typography */
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+  --font-size-h3: 20px;
+  --font-size-body: 16px;
+  --font-size-small: 14px;
+  --font-size-caption: 12px;
+  
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-full: 50%;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+  
+  /* Transitions */
+  --transition-fast: 200ms ease-in-out;
+  --transition-medium: 300ms ease-in-out;
+  
+  /* Z-Index */
+  --z-index-dropdown: 1000;
+  --z-index-modal: 2000;
+  --z-index-toast: 3000;
+}

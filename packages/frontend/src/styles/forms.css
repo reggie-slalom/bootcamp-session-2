@@ -1,0 +1,113 @@
+/**
+ * Form Styles
+ */
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.form-label-required::after {
+  content: ' *';
+  color: var(--color-error);
+}
+
+/* Text Input */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: var(--font-size-body);
+  font-family: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-fast);
+}
+
+.form-input:focus {
+  outline: none;
+  border: 2px solid var(--color-primary);
+  padding: 11px 15px; /* Adjust padding to prevent layout shift */
+}
+
+.form-input::placeholder {
+  color: var(--color-text-disabled);
+}
+
+.form-input:disabled {
+  background-color: var(--color-background);
+  cursor: not-allowed;
+}
+
+/* Textarea */
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Select/Dropdown */
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: var(--font-size-body);
+  font-family: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.form-select:focus {
+  outline: none;
+  border: 2px solid var(--color-primary);
+  padding: 11px 15px;
+}
+
+/* Checkbox */
+.form-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-text-secondary);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+.form-checkbox:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Error State */
+.form-input.error,
+.form-select.error,
+.form-textarea.error {
+  border-color: var(--color-error);
+  border-width: 2px;
+  padding: 11px 15px;
+}
+
+.form-error {
+  display: block;
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-small);
+  color: var(--color-error);
+}
+
+/* Help Text */
+.form-help {
+  display: block;
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+}

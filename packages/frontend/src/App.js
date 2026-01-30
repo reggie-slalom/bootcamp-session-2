@@ -1,125 +1,130 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useTasks } from './hooks/useTasks';
+import TaskList from './components/TaskList/TaskList';
+import TaskForm from './components/TaskForm/TaskForm';
+import TaskFilter from './components/TaskFilter/TaskFilter';
+import TaskStats from './components/TaskStats/TaskStats';
+import Toast from './components/Toast/Toast';
 import './App.css';
 
 function App() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [newItem, setNewItem] = useState('');
+  const {
+    tasks,
+    loading,
+    error,
+    filters,
+    createTask,
+    updateTask,
+    deleteTask,
+    toggleComplete,
+    updateFilters,
+    refreshTasks,
+  } = useTasks();
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [showForm, setShowForm] = useState(false);
+  const [toast, setToast] = useState(null);
 
-  const fetchData = async () => {
+  const showToast = (message, type = 'info') => {
+    setToast({ message, type });
+  };
+
+  const handleCreateTask = async (taskData) => {
     try {
-      setLoading(true);
-      const response = await fetch('/api/items');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const result = await response.json();
-      setData(result);
-      setError(null);
+      await createTask(taskData);
+      setShowForm(false);
+      showToast('Task created successfully!', 'success');
     } catch (err) {
-      setError('Failed to fetch data: ' + err.message);
-      console.error('Error fetching data:', err);
-    } finally {
-      setLoading(false);
+      showToast('Failed to create task. Please try again.', 'error');
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!newItem.trim()) return;
-
+  const handleUpdateTask = async (id, taskData) => {
     try {
-      const response = await fetch('/api/items', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: newItem }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to add item');
-      }
-
-      const result = await response.json();
-      setData([...data, result]);
-      setNewItem('');
+      await updateTask(id, taskData);
+      showToast('Task updated successfully!', 'success');
     } catch (err) {
-      setError('Error adding item: ' + err.message);
-      console.error('Error adding item:', err);
+      showToast('Failed to update task. Please try again.', 'error');
     }
   };
 
-  const handleDelete = async (itemId) => {
+  const handleDeleteTask = async (id) => {
     try {
-      const response = await fetch(`/api/items/${itemId}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete item');
-      }
-
-      setData(data.filter(item => item.id !== itemId));
-      setError(null);
+      await deleteTask(id);
+      showToast('Task deleted successfully!', 'success');
     } catch (err) {
-      setError('Error deleting item: ' + err.message);
-      console.error('Error deleting item:', err);
+      showToast('Failed to delete task. Please try again.', 'error');
+    }
+  };
+
+  const handleToggleComplete = async (id) => {
+    try {
+      await toggleComplete(id);
+    } catch (err) {
+      showToast('Failed to update task. Please try again.', 'error');
     }
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>To Do App</h1>
-        <p>Keep track of your tasks</p>
+    <div className="app">
+      <header className="app-header">
+        <h1>📝 TODO App</h1>
+        <p className="app-subtitle">Manage your tasks efficiently</p>
       </header>
 
-      <main>
-        <section className="add-item-section">
-          <h2>Add New Item</h2>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              value={newItem}
-              onChange={(e) => setNewItem(e.target.value)}
-              placeholder="Enter item name"
-            />
-            <button type="submit">Add Item</button>
-          </form>
-        </section>
+      <main className="app-main">
+        <div className="container">
+          <TaskStats />
 
-        <section className="items-section">
-          <h2>Items from Database</h2>
-          {loading && <p>Loading data...</p>}
-          {error && <p className="error">{error}</p>}
-          {!loading && !error && (
-            <ul>
-              {data.length > 0 ? (
-                data.map((item) => (
-                  <li key={item.id}>
-                    <span>{item.name}</span>
-                    <button 
-                      onClick={() => handleDelete(item.id)}
-                      className="delete-btn"
-                      type="button"
-                    >
-                      Delete
-                    </button>
-                  </li>
-                ))
-              ) : (
-                <p>No items found. Add some!</p>
-              )}
-            </ul>
+          <div className="app-actions">
+            <button
+              className="btn btn-primary"
+              onClick={() => setShowForm(!showForm)}
+              aria-label={showForm ? 'Hide task form' : 'Show task form'}
+            >
+              {showForm ? '✕ Cancel' : '+ Add Task'}
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={refreshTasks}
+              aria-label="Refresh tasks"
+            >
+              🔄 Refresh
+            </button>
+          </div>
+
+          {showForm && (
+            <div className="form-container">
+              <TaskForm
+                onSubmit={handleCreateTask}
+                onCancel={() => setShowForm(false)}
+              />
+            </div>
           )}
-        </section>
+
+          <TaskFilter filters={filters} onFilterChange={updateFilters} />
+
+          <TaskList
+            tasks={tasks}
+            loading={loading}
+            error={error}
+            onToggle={handleToggleComplete}
+            onUpdate={handleUpdateTask}
+            onDelete={handleDeleteTask}
+          />
+        </div>
       </main>
+
+      <footer className="app-footer">
+        <p>Built with ❤️ for Copilot Bootcamp</p>
+      </footer>
+
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 }
