@@ -49,31 +49,6 @@
   - None (default)
 - Priority can be changed at any time
 
-## Task Organization
-
-### FR-8: Sort Tasks
-- Users can sort tasks by:
-  - Due date (ascending/descending)
-  - Priority (high to low, low to high)
-  - Creation date (newest/oldest first)
-  - Completion status
-  - Alphabetically by title
-- Default sort order: incomplete tasks first, then by due date
-
-### FR-9: Filter Tasks
-- Users can filter tasks by:
-  - Completion status (all, complete, incomplete)
-  - Priority level
-  - Due date range
-  - Overdue tasks
-- Multiple filters can be applied simultaneously
-
-### FR-10: Search Tasks
-- Users can search tasks by title and description
-- Search is case-insensitive
-- Search returns results in real-time
-- Search results respect current filter and sort settings
-
 ## Data Persistence
 
 ### FR-11: Save Tasks

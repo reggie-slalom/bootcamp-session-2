@@ -16,42 +16,49 @@ This document defines the testing principles and requirements for the TODO app. 
 
 ## Testing Pyramid
 
-Follow the testing pyramid approach with appropriate distribution:
-- **70% Unit Tests**: Fast, isolated tests of individual functions/components
-- **20% Integration Tests**: Tests of interactions between components
-- **10% End-to-End Tests**: Full user workflow tests
+Follow a balanced testing approach:
+- **50% Unit Tests**: Fast, isolated tests for critical business logic and utilities
+- **40% Integration Tests**: Tests of component interactions and API endpoints
+- **10% End-to-End Tests**: Full user workflow tests for critical paths
 
 ## Test Requirements
 
 ### Required for All New Features
-- All new features MUST include appropriate tests before merging
-- Bug fixes MUST include regression tests
-- Refactoring MUST maintain or improve existing test coverage
+- New features SHOULD include appropriate tests before merging
+- Bug fixes SHOULD include regression tests when practical
+- Refactoring SHOULD maintain existing test coverage
 - Breaking changes MUST update affected tests
 
-### Minimum Coverage Standards
-- Unit test coverage: Minimum 80% for new code
-- Critical paths: 100% coverage required
-- Edge cases and error handling: Must be tested
-- Accessibility features: Must include automated tests
+### Practical Coverage Standards
+- Overall test coverage: Target 70% for meaningful code paths
+- Critical business logic: 90%+ coverage recommended
+- Utility functions and validators: High coverage (80%+)
+- UI components: Test user interactions and critical rendering, not implementation details
+- Error handling: Test main error scenarios
+- Edge cases: Test when they represent realistic user scenarios
 
 ## Unit Testing
 
-### What to Test
-- Pure functions and utility methods
-- Component rendering and props
-- State management logic
-- Data transformations
-- Validation logic
-- Error handling
+### What to Test (Priority Order)
+1. **Critical business logic** - Validation, calculations, data transformations
+2. **Utility functions** - Pure functions that are reused across the app
+3. **Complex algorithms** - Sorting, filtering, search logic
+4. **Error handling** - Main error scenarios and edge cases
+
+### What NOT to Over-Test
+- Simple getters/setters
+- Trivial component rendering (test behavior, not structure)
+- Third-party library functionality
+- Framework boilerplate
+- Obvious pass-through functions
 
 ### Unit Test Guidelines
 - Each test should test one specific behavior
-- Use descriptive test names following "should [expected behavior] when [condition]"
-- Arrange-Act-Assert (AAA) pattern
+- Use descriptive test names: "should [expected behavior] when [condition]"
+- Follow Arrange-Act-Assert (AAA) pattern
 - Mock external dependencies
-- Test both success and failure cases
-- Test boundary conditions and edge cases
+- Test both success and failure cases for critical paths
+- Focus on boundary conditions that matter
 
 ### Frontend Unit Tests (React)
 ```javascript
