@@ -8,7 +8,6 @@ function TaskItem({ task, onToggle, onUpdate, onDelete }) {
   const [editedTask, setEditedTask] = useState(task);
 
   const isOverdue = isTaskOverdue(task);
-  const priorityClass = `priority-${task.priority}`;
 
   const handleToggle = () => {
     onToggle(task.id);
